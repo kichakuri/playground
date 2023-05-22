@@ -4,6 +4,8 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 from regular_expressions import *
+
+
 def print_hi(name):
     # Use a breakpoint in the code line below to debug your script.
     print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
@@ -11,7 +13,10 @@ def print_hi(name):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-#    print_hi('PyCharm')
-    print (get_first_regex())
+    data = get_read_from_csv()
+    datafile = get_raw_data()
+#    print(data)
+    print(datafile.fetch(n_rows=10))
+#    print (get_first_regex())
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
