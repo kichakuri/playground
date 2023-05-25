@@ -13,10 +13,7 @@ def print_hi(name):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    data = get_read_from_csv()
     datafile = get_raw_data()
-#    print(data)
     print(datafile.head(2))
-#    print (get_first_regex())
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
