@@ -1,25 +1,11 @@
 import polars as pl
 
 
-# from datetime import datetime
-
-def get_raw_data():
-    # Get the data from the csv file in the Documents folder
-    raw_df = pl.read_csv(r'schoolproformainvoicedatesandexamcount.csv',
-                         try_parse_dates=True)
-
-    # Add column for the month it was invoiced.
-    # df_with_mm_and_yy = raw_df.with_columns([
-    #     pl.col('Invoice Date').dt.month().alias('Inv_MM'),
-    #     pl.col('Invoice Date').dt.year().alias('Inv_YY')
-    # ]
-    # )
-
-    # Get Schools where the invoices amount is "Null" and Exam Series is more than 0
-    schools_with_exam_but_no_inv = raw_df.filter(
-        (pl.col('Invoice Amount') == 'NULL') & (pl.col('Exam Series Created') > 0)
-    )
-
-
-
-    return schools_with_exam_but_no_inv
+def get_revenue_by_month():
+    raw_data = pl.read_csv(r'schoolproformainvoicedatesandexamcount.csv', try_parse_dates=True)
+    filtered_by_amount = raw_data.filter(pl.col('Invoice Amount') != 'NULL')
+    data = filtered_by_amount.with_columns(pl.col('Invoice Amount').cast(pl.Float64))
+    raw_data_with_mm_col = data.with_columns(pl.col('Invoice Date').dt.month().alias('Inv_MM'))
+    revenue_grouped_by_month = raw_data_with_mm_col.groupby('Inv_MM')
+    revenue_amt_by_month = revenue_grouped_by_month.agg(pl.sum('Invoice Amount')).sort(by='Inv_MM', ascending=False)
+    return revenue_amt_by_month
