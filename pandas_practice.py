@@ -1,5 +1,9 @@
 import pandas as pd
-
+import numpy as np
+import matplotlib_inline as plt
+import seaborn as sns
+plt.style.use('ggplot')
+pd.set_option('max_columns',200)
 
 def get_monthly_revenue():
     raw_data = pd.read_csv('schoolproformainvoicedatesandexamcount.csv',
